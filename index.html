@@ -1,12 +1,36 @@
 <html>
 <head>
   <title>Generate</title>
+
+  <link rel="stylesheet" type="text/css" href="Tangle/TangleKit/TangleKit.css">
+  <script type="text/javascript" src="Tangle/TangleKit/mootools.js"></script>
+  <script type="text/javascript" src="Tangle/Tangle.js"></script>
+  <script type="text/javascript" src="Tangle/TangleKit/BVTouchable.js"></script>
+  <script type="text/javascript" src="Tangle/TangleKit/TangleKit.js"></script>
   <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-  <h1>The Wright-Fisher Population Model</h1>
-  <p>Rather than start by describing the model, I thought I'd let
-     you play with it. Once you have a feel for the dynamics,
-     then we can get more formal.</p>
+  <div id="intro">
+    <h1>The Wright-Fisher Population Model</h1>
+    <p>Rather than start by describing the model, I thought I'd let
+      you play with it. Once you have a feel for the dynamics,
+      then we can get more formal.</p>
+
+    <p>Simulate <strong data-var="rounds" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> rounds of Wright-Fisher.</p>
+
+    <p>
+      The ancestral population should have 
+      <strong data-var="ancestors" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> individuals.
+    </p>
+    
+    <p>
+      Allele <strong id="a">A</strong> should have a frequency, p, 
+      of <strong data-var="p" class="TKAdjustableNumber" data-min="0.0" data-max="1.0" data-step="0.01"></strong>. 
+
+      Which leaves allele <strong id="b">B</strong> with a frequency, q, 
+      of <strong data-var="q"></strong>.
+    </p>
+  </div>
+
   <canvas id="canvas"></canvas>
 </body>
