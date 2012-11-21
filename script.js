@@ -3,7 +3,9 @@
     /* TODOS:
        - devise a way to make p steps a function of N:
          this.step = (this.max-this.min)/n;
-
+       - draw parent path on hover
+       - highlight round at which fixation occurred
+         compare fixation time to expected value
      */
 
     var $ = function(sel){
@@ -34,20 +36,6 @@
 	    ctx.fill();
 	    ctx.stroke();
 	}, ctx);
-    }
-
-    var randInt = function() {
-	var min = 0;
-	var max = 1;
-	if (arguments.length === 2){
-	    min = arguments[0];
-	    max = arguments[1];
-	} else {
-	    max = arguments[0];
-	}
-
-	var range = max - min;
-	return Math.floor(Math.random()*range) + min;
     }
 
     var drawWrightFisher = function(t, n, p, q){
@@ -83,7 +71,7 @@
 			parent: null
 		    };
 		} else {
-		    parent = randInt(n);
+		    parent = _.random(n-1);
 		    allele = parentPointers[i-1][parent].allele;
 
 		    parentPointers[i][j] = {
