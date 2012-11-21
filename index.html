@@ -16,21 +16,21 @@
       you play with it. Once you have a feel for the dynamics,
       then we can get more formal.</p>
 
-    <p>Simulate <strong data-var="rounds" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> rounds of Wright-Fisher.</p>
+    <p>Simulate <strong data-var="t" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> (t) rounds of Wright-Fisher.</p>
 
     <p>
-      The ancestral population should have 
-      <strong data-var="ancestors" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> individuals.
+      Make the popualation size (<em>N</em>)
+      <strong data-var="n" class="TKAdjustableNumber" data-min="1" data-max="50" data-step="1"></strong> individuals.
     </p>
     
     <p>
-      Allele <strong id="a">A</strong> should have a frequency, p, 
+      Allele <strong id="a">A</strong> should have a frequency (<em>p</em>)
       of <strong data-var="p" class="TKAdjustableNumber" data-min="0.0" data-max="1.0" data-step="0.01"></strong>. 
 
-      Which leaves allele <strong id="b">B</strong> with a frequency, q, 
+      Which leaves allele <strong id="b">B</strong> with a frequency (<em>q</em>)
       of <strong data-var="q"></strong>.
     </p>
   </div>
 
-  <canvas id="canvas"></canvas>
+  <canvas id="canvas" width="640px" height="640px"></canvas>
 </body>
