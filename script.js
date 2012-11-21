@@ -6,6 +6,8 @@
        - draw parent path on hover
        - highlight round at which fixation occurred
          compare fixation time to expected value
+       - maybe when t is changed, we should just
+         continue from the current simulation
      */
 
     var $ = function(sel){
@@ -36,25 +38,11 @@
 	    ctx.fill();
 	    ctx.stroke();
 	}, ctx);
-    }
+    };
 
-    var drawWrightFisher = function(t, n, p, q){
-	var canvas = $("#canvas");
-	var ctx = canvas.getContext('2d');
 
-	var w = canvas.width;
-	var h = canvas.height;
-	ctx.clearRect(0,0,w,h);
-
-	var rDecider = (n > t) ? n : t;
-	var r = w/(4*rDecider);
+    var populateWFMatrix = function(t, n, p, q){
 	var pCount = n*p;
-
-	function circleX(r, j){ return r*(4*j + 2); }
-	function circleY(r, i){ return r*(3*i + 2); }
-
-	var maxX = circleX(r, n);
-	var xOffset = (w - maxX)/2;
 
 	// initialize the parentPointers
 	var parentPointers = new Array(t);
@@ -71,6 +59,7 @@
 			parent: null
 		    };
 		} else {
+		    // underscore random is inclusive
 		    parent = _.random(n-1);
 		    allele = parentPointers[i-1][parent].allele;
 
@@ -81,6 +70,28 @@
 		}
 	    }
 	}
+
+	return parentPointers;
+    };	
+
+    var drawWrightFisher = function(t, n, p, q){
+	var canvas = $("#canvas");
+	var ctx = canvas.getContext('2d');
+
+	var w = canvas.width;
+	var h = canvas.height;
+	ctx.clearRect(0,0,w,h);
+
+	var rDecider = (n > t) ? n : t;
+	var r = w/(4*rDecider);
+
+	function circleX(r, j){ return r*(4*j + 2); }
+	function circleY(r, i){ return r*(3*i + 2); }
+
+	var maxX = circleX(r, n);
+	var xOffset = (w - maxX)/2;
+
+	var parentPointers = populateWFMatrix(t, n, p, q);
 
 	for (var i = 0; i < t; i += 1){
 	    for (var j = 0; j < n; j += 1){
