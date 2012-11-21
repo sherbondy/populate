@@ -44,21 +44,21 @@
 	var h = canvas.height;
 	ctx.clearRect(0,0,w,h);
 
-	var r = w/(4*n);
+	var rDecider = (n > t) ? n : t;
+	var r = w/(4*rDecider);
 	var pCount = n*p;
 
-	function circleX(j, r){ return r*(4*j + 2); }
-	function circleY(i, r){ return r*(3*i + 2); }
+	function circleX(r, j){ return r*(4*j + 2); }
+	function circleY(r, i){ return r*(3*i + 2); }
 
-	var hNeeded = circleY(t, r);
-	console.log(hNeeded);
-	canvas.height = hNeeded;
+	var maxX = circleX(r, n);
+	var xOffset = (w - maxX)/2;
 
 	for (var i = 0; i < t; i += 1){
 	    for (var j = 0; j < n; j += 1){
 		transact(function(){
-		    var x = circleX(j, r);
-		    var y = circleY(i, r);
+		    var x = xOffset + circleX(r, j);
+		    var y = circleY(r, i);
 		    ctx.translate(x, y);
 
 		    var color = j >= pCount ? red : blue;
