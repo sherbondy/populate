@@ -1,4 +1,4 @@
-(function(){
+// (function(){
 
     /* TODOS:
        - devise a way to make p steps a function of N:
@@ -36,6 +36,20 @@
 	}, ctx);
     }
 
+    var randInt = function() {
+	var min = 0;
+	var max = 1;
+	if (arguments.length === 2){
+	    min = arguments[0];
+	    max = arguments[1];
+	} else {
+	    max = arguments[0];
+	}
+
+	var range = max - min;
+	return Math.floor(Math.random()*range) + min;
+    }
+
     var drawWrightFisher = function(t, n, p, q){
 	var canvas = $("#canvas");
 	var ctx = canvas.getContext('2d');
@@ -54,6 +68,32 @@
 	var maxX = circleX(r, n);
 	var xOffset = (w - maxX)/2;
 
+	// initialize the parentPointers
+	var parentPointers = new Array(t);
+
+	for (var i = 0; i < t; i += 1){
+	    parentPointers[i] = new Array(n);
+	    for (var j = 0; j < n; j += 1){
+		var allele;
+		if (i === 0) {
+		    allele = j >= pCount ? 0 : 1;
+
+		    parentPointers[0][j] = {
+			allele: allele, 
+			parent: null
+		    };
+		} else {
+		    parent = randInt(n);
+		    allele = parentPointers[i-1][parent].allele;
+
+		    parentPointers[i][j] = {
+			allele: allele,
+			parent: parent
+		    };
+		}
+	    }
+	}
+
 	for (var i = 0; i < t; i += 1){
 	    for (var j = 0; j < n; j += 1){
 		transact(function(){
@@ -61,7 +101,10 @@
 		    var y = circleY(r, i);
 		    ctx.translate(x, y);
 
-		    var color = j >= pCount ? red : blue;
+		    var pp = parentPointers[i][j];
+		    if (pp) {
+			var color = pp.allele === 0 ? red : blue;
+		    }
 		    drawCircle(ctx, r, color);
 		}, ctx);
 	    }
@@ -85,4 +128,4 @@
 	});
     });
 
-})();
+// })();
