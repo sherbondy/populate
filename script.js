@@ -1,5 +1,11 @@
 (function(){
 
+    /* TODOS:
+       - devise a way to make p steps a function of N:
+         this.step = (this.max-this.min)/n;
+
+     */
+
     var $ = function(sel){
 	var isId = sel[0] === "#";
 	var rest = sel.slice(1);
@@ -38,19 +44,27 @@
 	var h = canvas.height;
 	ctx.clearRect(0,0,w,h);
 
-	var cell = w/n;
-	var r = cell/4;
+	var r = w/(4*n);
 	var pCount = n*p;
-	console.log(w);
 
-	for (var i = 0; i < n; i += 1){
-	    transact(function(){
-		var x = i*cell + 2*r;
-		ctx.translate(x, 2*r);
+	function circleX(j, r){ return r*(4*j + 2); }
+	function circleY(i, r){ return r*(3*i + 2); }
 
-		var color = i >= pCount ? red : blue;
-		drawCircle(ctx, r, color);
-	    }, ctx);
+	var hNeeded = circleY(t, r);
+	console.log(hNeeded);
+	canvas.height = hNeeded;
+
+	for (var i = 0; i < t; i += 1){
+	    for (var j = 0; j < n; j += 1){
+		transact(function(){
+		    var x = circleX(j, r);
+		    var y = circleY(i, r);
+		    ctx.translate(x, y);
+
+		    var color = j >= pCount ? red : blue;
+		    drawCircle(ctx, r, color);
+		}, ctx);
+	    }
 	}
     };
 
